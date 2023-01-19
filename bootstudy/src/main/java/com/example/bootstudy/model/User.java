@@ -1,10 +1,10 @@
 package com.example.bootstudy.model;
 
-import com.example.bootstudy.model.Role ;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.Collection;
 import java.util.HashSet;
@@ -42,13 +42,13 @@ public class User implements UserDetails {
     @NotBlank(message = "password shouldn't be empty")
     private String password;
 
-    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
-    @JoinTable(name ="user_roles" ,
-            joinColumns =@JoinColumn(name = "user_id"),
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
 
-    //  @NotEmpty(message = "SET shouldn't be empty")
-    //  @Valid
+    @NotEmpty(message = "SET shouldn't be empty")
+    @Valid
     private Set<Role> roles = new HashSet<>();
 
     public User() {
