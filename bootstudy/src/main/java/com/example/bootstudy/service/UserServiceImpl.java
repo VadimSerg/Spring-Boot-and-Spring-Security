@@ -9,7 +9,7 @@ import com.example.bootstudy.model.User;
 import java.util.List;
 
 @Service(value="userServiceImpl")
-@Transactional
+@Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
@@ -23,19 +23,11 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    @Transactional
     public void saveUser(User user) {
-
-
-
-      //  Set<Role> updatedRoles = new HashSet<>((Collection<? extends Role>) user.getAuthorities());
-     // user.setRoles(user.getRoles());
 
         System.out.println("************SAVING PROCESS********************************");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-
-
-
         userDao.save(user);
 
         System.out.println("UserID:" + user.getId() +
@@ -60,6 +52,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    @Transactional
     public void update(User user) {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -69,6 +62,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    @Transactional
     public void deleteUserById(long id) {
         userDao.deleteById(id);
     }

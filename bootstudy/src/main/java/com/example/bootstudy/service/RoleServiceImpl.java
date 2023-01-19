@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service(value="roleServiceImpl")
-@Transactional
+@Transactional(readOnly = true)
 public class RoleServiceImpl  implements  RoleService{
 
     private final RoleDao roleDao;
@@ -21,6 +21,7 @@ public class RoleServiceImpl  implements  RoleService{
 
 
     @Override
+    @Transactional
     public void saveRole(Role role) {
 
         roleDao.save(role);
@@ -39,16 +40,19 @@ public class RoleServiceImpl  implements  RoleService{
     }
 
     @Override
+    @Transactional
     public void update(Role role) {
         roleDao.update(role);
     }
 
     @Override
+    @Transactional
     public void deleteRoleById(long id) {
         roleDao.deleteById(id);
     }
 
     @Override
+    @Transactional
     public Role getRoleByName(String role) {
         return roleDao.getAuthorityByName(role);
     }

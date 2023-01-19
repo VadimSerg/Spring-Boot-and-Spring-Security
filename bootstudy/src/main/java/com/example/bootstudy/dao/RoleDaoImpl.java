@@ -2,12 +2,14 @@ package com.example.bootstudy.dao;
 
 import org.springframework.stereotype.Component;
 import com.example.bootstudy.model.Role;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Component
+@Repository
 public class RoleDaoImpl  implements RoleDao  {
 
     @PersistenceContext

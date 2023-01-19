@@ -2,6 +2,7 @@ package com.example.bootstudy.dao;
 
 import org.springframework.stereotype.Component;
 import com.example.bootstudy.model.User;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -9,6 +10,7 @@ import java.util.List;
 
 
 @Component
+@Repository
 public class UserDaoImpl implements UserDao {
 
     @PersistenceContext
@@ -42,7 +44,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getUserByName(String name) {
-        return entityManager.createQuery("select  u from User u where u.username = :name",User.class).
+        return entityManager.createQuery("select  u from User u join fetch u.roles where u.username = :name",User.class).
                 setParameter("name",name).getSingleResult();
     }
 }

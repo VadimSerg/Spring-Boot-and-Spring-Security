@@ -42,7 +42,7 @@ public class User implements UserDetails {
     @NotBlank(message = "password shouldn't be empty")
     private String password;
 
-    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
     @JoinTable(name ="user_roles" ,
             joinColumns =@JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -160,15 +160,6 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // List<SimpleGrantedAuthority> grantedAuthorities = new ArrayList<>();
-//        Set<SimpleGrantedAuthority> grantedAuthorities = new HashSet<>();
-//        for (Role role:roles) {
-//            grantedAuthorities.add(new SimpleGrantedAuthority(role.getRoleName()));
-//        }
-//
-//
-//        return grantedAuthorities;
-
         return  getRoles();
     }
 
