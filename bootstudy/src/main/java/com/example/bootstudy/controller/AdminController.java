@@ -1,16 +1,17 @@
 package com.example.bootstudy.controller;
 
+import com.example.bootstudy.model.Role;
+import com.example.bootstudy.model.User;
+import com.example.bootstudy.service.RoleService;
+import com.example.bootstudy.service.UserService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import com.example.bootstudy.model.Role;
-import com.example.bootstudy.model.User;
-import com.example.bootstudy.service.RoleService;
-import com.example.bootstudy.service.UserService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
@@ -57,9 +58,8 @@ public class AdminController {
     }
 
 
-
     @PostMapping(value = "/saveUser")
-  //  @Validated
+    @Validated
     public  String saveUser(@Valid @ModelAttribute("user") User user,
                              @Valid @RequestParam(value = "roles_checkbox")  @Size(min=1) String [] authorities,BindingResult bindingResult ) {
 
@@ -67,16 +67,9 @@ public class AdminController {
             return  "admins_pages/newUser";
         }
 
-
-//        if (authorities.length  ==0) {
-//            System.out.println("USER WASN'T SAVED authorities :length: "+ authorities.length   );
-//            return "admins_pages/newUser";
-//
-//       }
         System.out.println("authorities :length: "+ authorities.length );
 
         user.setRoles(roleService.getRolesByRoleNames(authorities));
-       // user.setRoles(user.getRoles());
         userService.saveUser(user);
         System.out.println("USER SAVED WAS Succesfully");
         return "redirect:/admin";
@@ -88,6 +81,7 @@ public class AdminController {
 
     @GetMapping(value = "/edit/{id}")
     public String showEditForm(@PathVariable("id") Long id, Model model) {
+
         model.addAttribute("user", userService.getUserById(id));
         model.addAttribute("AllRoles",roleService.getAllRoles());
         return "admins_pages/editForm";
@@ -119,6 +113,7 @@ public class AdminController {
     //Code for user's page
     @GetMapping("/user")
     public String showUserPage(Model model, @AuthenticationPrincipal UserDetails logedInUser) {
+
         User user = (User) userDetailsService.loadUserByUsername(logedInUser.getUsername());
         model.addAttribute("user",user);
         return  "userPage";
@@ -127,11 +122,6 @@ public class AdminController {
 
 
     //Adding roles
-
-
-
-
-
     @GetMapping("/showFormRoles")
     public String showFormForAddingRoles(Model model, Role role) {
         model.addAttribute("Role", role);
@@ -155,6 +145,7 @@ public class AdminController {
 
     @GetMapping("editRole/{id}")
     public String showEditRoleForm(@PathVariable("id") Long id, Model model) {
+
         model.addAttribute("Role",roleService.getRoleById(id));
         return "admins_pages/editRoleForm";
     }
@@ -166,13 +157,13 @@ public class AdminController {
             return  "admins_pages/editRoleForm";
         }
 
-
         roleService.update(role);
         return "redirect:/admin";
     }
 
     @GetMapping("/role{id}")
     public String deleteRole(@PathVariable("id") Long id) {
+
         roleService.deleteRoleById(id);
         return "redirect:/admin";
     }

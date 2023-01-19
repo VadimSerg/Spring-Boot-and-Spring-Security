@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:Roles="http://www.w3.org/1999/xhtml"
-      xmlns:type="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org"
+>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,19 +8,19 @@
 </head>
 <body>
 <h1>Регистрация пользователя </h1>
-<a href ="/logout">Log out</a>
+<a href="/logout">Log out</a>
 <br/><br>
- <form th:action= "@{/saveUser}"
+<form th:action="@{/saveUser}"
       th:object="${user}"
       th:method="POST">
 
-     <p>
-       <label for="username"> Введите имя пользователя:  </label>
-       <input type="text" th:field ="*{username}" id="username"/>
-       <e style="color: red" th:if="${#fields.hasErrors('username')}" th:errors ="*{username}">User Name  Error</e>
-     </p>
+    <p>
+        <label for="username"> Введите имя пользователя: </label>
+        <input type="text" th:field="*{username}" id="username"/>
+        <e style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">User Name Error</e>
+    </p>
 
-     <p>
+    <p>
         <label for="surname" > Введите фамилию:  </label>
         <input type="text" th:field ="*{surname}" id ="surname"/>
         <e style="color: red" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname Error</e>
@@ -53,19 +53,10 @@
                 th:text ="${role.getRoleName()}"
                 th:value="${role.getRoleName()}"
 
-
-
          />
 
 
      </p>
-
-
-
-
-
-
-
 
      <p>
         <input type="submit" value="сохранить">

@@ -1,10 +1,10 @@
 package com.example.bootstudy.service;
 
+import com.example.bootstudy.dao.UserDao;
+import com.example.bootstudy.model.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.example.bootstudy.dao.UserDao;
-import com.example.bootstudy.model.User;
 
 import java.util.List;
 
@@ -31,11 +31,7 @@ public class UserServiceImpl implements UserService {
         userDao.save(user);
 
         System.out.println("UserID:" + user.getId() +
-                "with rolename " +
-                //user.getRoles().toArray().toString()+
-                " was saved");///ВЫВОД ---id user присваивается в дб после
-        // сохранения , но никак не до сохранения
-
+                "with rolename was saved");
     }
 
 
@@ -66,7 +62,4 @@ public class UserServiceImpl implements UserService {
     public void deleteUserById(long id) {
         userDao.deleteById(id);
     }
-
-
-
 }
